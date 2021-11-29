@@ -1,6 +1,16 @@
 {
+  "name": "lensia-token",
+  "version": "1.0.0",
+  "description": "Lensia is crypto game token project with dapp project for buy/sell game items",
+  "scripts": {
+    "test": "truffle test",
+    "deploy": "truffle migrate"
+  },
   "dependencies": {
+    "chai": "^4.3.4",
+    "ethers": "^5.5.1",
     "ganache-cli": "^6.12.2",
     "truffle": "^5.4.22"
-  }
+  },
+  "author": "Nac"
 }
