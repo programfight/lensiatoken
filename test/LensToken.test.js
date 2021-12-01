@@ -13,9 +13,11 @@ contract('lensToken', accounts => {
     let lensToken;
     let ownerAddress = accounts[0];
     let anotherAddress = accounts[1];
+    let ownerBalance = TOTAL_SUPPLY;
 
     beforeEach(async () => {
         lensToken = await LENS_TOKEN.deployed();
+
     })
 
     it('check:token_name', async () => {
@@ -48,7 +50,8 @@ contract('lensToken', accounts => {
     it("check:transfer", async () => {
         let transfer = await lensToken.transfer(anotherAddress, TRANSFER_AMOUNT.toNumber());
         let balanceOf = await lensToken.balanceOf(ownerAddress);
-        EXPECT(parseInt(balanceOf)).to.eq(TOTAL_SUPPLY.sub(TRANSFER_AMOUNT).toNumber());
+        ownerBalance = ownerBalance.sub(TRANSFER_AMOUNT);
+        EXPECT(parseInt(balanceOf)).to.eq(ownerBalance.toNumber());
     });
 
     it("check:approve", async () => {
@@ -57,4 +60,29 @@ contract('lensToken', accounts => {
         EXPECT(parseInt(allowance)).to.eq(TRANSFER_AMOUNT.toNumber());
     });
 
+    it("check:transferFrom", async () => {
+        let approve = await lensToken.approve(ownerAddress, TRANSFER_AMOUNT.toNumber());
+        let transferFrom = await lensToken.transferFrom(ownerAddress, anotherAddress, TRANSFER_AMOUNT.toNumber());
+        let balanceOf = await lensToken.balanceOf(ownerAddress);
+        ownerBalance = ownerBalance.sub(TRANSFER_AMOUNT);
+        EXPECT(parseInt(balanceOf)).to.eq(ownerBalance.toNumber());
+    });
+
+    it("check:decreaseAllowance", async () => {
+        await lensToken.decreaseAllowance(anotherAddress, TRANSFER_AMOUNT.toNumber());
+        let allowance = await lensToken.allowance(ownerAddress, anotherAddress);
+        EXPECT(parseInt(allowance)).to.eq(0);
+    });
+
+    it("check:increaseAllowance", async () => {
+        await lensToken.increaseAllowance(anotherAddress, TRANSFER_AMOUNT.toNumber());
+        let allowance = await lensToken.allowance(ownerAddress, anotherAddress);
+        EXPECT(parseInt(allowance)).to.eq(TRANSFER_AMOUNT.toNumber());
+    });
+
+    it("check:mint", async () => {
+        await lensToken.mint(TRANSFER_AMOUNT.toNumber());
+        let totalSupply = await lensToken.totalSupply();
+        EXPECT(parseInt(totalSupply)).to.eq(TOTAL_SUPPLY.add(TRANSFER_AMOUNT).toNumber());
+    });
 });
