@@ -1,0 +1,11 @@
+{
+  "name": "lensia-token-contracts",
+  "version": "1.0.0",
+  "description": "Lensia-token smart contracts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nac",
+  "license": "ISC"
+}

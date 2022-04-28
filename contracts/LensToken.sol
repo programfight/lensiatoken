@@ -8,5 +8,5 @@ import "./LensTokenOwnable.sol";
 import "./LensTokenBEP20.sol";
 
 contract LensToken is LensTokenBEP20 {
-    constructor() LensTokenBEP20("Lensia Token", "LENS", 15, 1000000000000000) public {}
+    constructor() LensTokenBEP20("Lensia Token", "LENS", 18, 10000000000000*10**18) public {}
 }

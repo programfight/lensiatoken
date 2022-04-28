@@ -1,6 +1,6 @@
 {
   "name": "lensia-token",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Lensia is crypto game token project with dapp project for buy/sell game items",
   "scripts": {
     "test": "truffle test",
